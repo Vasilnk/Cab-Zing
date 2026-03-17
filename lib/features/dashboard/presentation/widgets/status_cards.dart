@@ -21,6 +21,7 @@ class StatusCards extends StatelessWidget {
         label: 'Invoices',
         value: '10,232.00',
         sub: 'Rupees',
+        labelColor: AppColors.accentTeal,
         pillColor: AppColors.accentTeal,
         iconColor: AppColors.darkGreen,
         iconPath: AppAssets.invoices,
@@ -34,10 +35,9 @@ class StatusCards extends StatelessWidget {
           child: GestureDetector(
             onTap: c.label == 'Invoices'
                 ? () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const InvoicesScreen()),
-                    )
+                    context,
+                    MaterialPageRoute(builder: (_) => const InvoicesScreen()),
+                  )
                 : null,
             child: _StatCard(data: c),
           ),
@@ -50,9 +50,11 @@ class StatusCards extends StatelessWidget {
 class StatCardData {
   final String label, value, sub, iconPath;
   final Color pillColor, iconColor;
+  final Color? labelColor;
 
   const StatCardData({
     required this.label,
+    this.labelColor,
     required this.value,
     required this.sub,
     required this.pillColor,
@@ -101,9 +103,9 @@ class _StatCard extends StatelessWidget {
               children: [
                 Text(
                   data.label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: AppColors.accentBeige,
+                    color: data.labelColor ?? AppColors.accentBeige,
                   ),
                 ),
                 const SizedBox(height: 2),
