@@ -17,10 +17,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   bool obscurePassword = true;
-  String? usernameError;
-  String? passwordError;
 
   @override
   void dispose() {
@@ -30,22 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> handleLogin() async {
-    setState(() {
-      usernameError = null;
-      passwordError = null;
-    });
+    // Validate form fields
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
 
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
-
-    if (username.isEmpty) {
-      setState(() => usernameError = 'Username is required');
-      return;
-    }
-    if (password.isEmpty) {
-      setState(() => passwordError = 'Password is required');
-      return;
-    }
 
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final success = await authProvider.login(username, password);
@@ -89,8 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           passwordController: passwordController,
                           obscurePassword: obscurePassword,
                           isLoading: auth.isLoading,
-                          usernameError: usernameError,
-                          passwordError: passwordError,
+                          formKey: formKey,
                           onLogin: handleLogin,
                           onTogglePassword: () => setState(
                             () => obscurePassword = !obscurePassword,

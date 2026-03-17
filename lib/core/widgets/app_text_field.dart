@@ -9,15 +9,15 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.controller,
     this.suffix,
-    this.errorText,
+    this.validator,
   });
 
   final String hint;
-  final IconData icon;
+  final Widget icon;
   final bool obscureText;
   final TextEditingController? controller;
   final Widget? suffix;
-  final String? errorText;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +26,22 @@ class AppTextField extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 12),
-          child: Icon(icon, color: AppColors.highlightAction, size: 22),
+          child: icon,
         ),
         Expanded(
-          child: TextField(
+          child: TextFormField(
             controller: controller,
             obscureText: obscureText,
+            validator: validator,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             style: const TextStyle(color: AppColors.textMain, fontSize: 15),
             decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: const TextStyle(
+              labelText: hint,
+              labelStyle: const TextStyle(
                 color: AppColors.textHint,
                 fontSize: 14,
               ),
               border: InputBorder.none,
-              errorText: errorText,
               suffixIcon: suffix,
             ),
           ),
