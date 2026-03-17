@@ -4,7 +4,9 @@ import 'package:cab_zing/features/alerts/alert_screen.dart';
 import 'package:cab_zing/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:cab_zing/features/profile/screens/profile_screen.dart';
 import 'package:cab_zing/features/routes/routes_screen.dart';
+import 'package:cab_zing/features/profile/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavigationControl extends StatefulWidget {
   const BottomNavigationControl({super.key});
@@ -23,6 +25,14 @@ class _BottomNavigationControlState extends State<BottomNavigationControl> {
     const AlertScreen(),
     const ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ProfileProvider>().loadProfile();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

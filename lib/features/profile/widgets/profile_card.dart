@@ -1,71 +1,92 @@
 import 'package:cab_zing/core/constants/app_assets.dart';
 import 'package:cab_zing/core/theme/app_colors.dart';
+import 'package:cab_zing/features/profile/providers/profile_provider.dart';
 import 'package:cab_zing/features/profile/widgets/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColors.cardBg,
-        borderRadius: BorderRadius.circular(28),
-      ),
-      padding: const EdgeInsets.all(18),
-      child: Column(
-        children: [
-          Row(
+    return Consumer<ProfileProvider>(
+      builder: (context, provider, child) {
+        if (provider.isLoading && provider.profile == null) {
+          return Container(
+            height: 200,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.cardBg,
+              borderRadius: BorderRadius.circular(28),
+            ),
+            child: const CircularProgressIndicator(color: AppColors.accentTeal),
+          );
+        }
+
+        final profile = provider.profile;
+
+        return Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppColors.cardBg,
+            borderRadius: BorderRadius.circular(28),
+          ),
+          padding: const EdgeInsets.all(18),
+          child: Column(
             children: [
-              ProfileImage(),
-              const SizedBox(width: 16),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'David Arnold',
-                      style: TextStyle(
-                        color: AppColors.textMain,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
+              Row(
+                children: [
+                  ProfileImage(imageUrl: profile?.profileImage),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          profile?.fullName ?? 'No Name',
+                          style: const TextStyle(
+                            color: AppColors.textMain,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          profile?.email ?? 'No Email',
+                          style: const TextStyle(
+                            color: AppColors.accentLightBlue,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'david012@cabzing',
-                      style: TextStyle(
-                        color: AppColors.accentLightBlue,
-                        fontSize: 13,
-                      ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const FaIcon(
+                      FontAwesomeIcons.penToSquare,
+                      color: Colors.white,
+                      size: 22,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const FaIcon(
-                  FontAwesomeIcons.penToSquare,
-                  color: Colors.white,
-                  size: 22,
-                ),
-              ),
+              const SizedBox(height: 18),
+              const StatusRow(),
+              const SizedBox(height: 16),
+              const LogoutButton(),
             ],
           ),
-          const SizedBox(height: 18),
-          const StatusRow(),
-          const SizedBox(height: 16),
-          const LogoutButton(),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 class ProfileImage extends StatelessWidget {
-  const ProfileImage({super.key});
+  final String? imageUrl;
+  const ProfileImage({super.key, this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +100,14 @@ class ProfileImage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
-        child: Image.asset(AppAssets.profile, fit: BoxFit.cover),
+        child: imageUrl != null && imageUrl!.isNotEmpty
+            ? Image.network(
+                imageUrl!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    Image.asset(AppAssets.profile, fit: BoxFit.cover),
+              )
+            : Image.asset(AppAssets.profile, fit: BoxFit.cover),
       ),
     );
   }
@@ -102,7 +130,7 @@ class StatusRow extends StatelessWidget {
         const SizedBox(width: 12),
         StatusItem(
           color: AppColors.accentTeal,
-          icon: Icons.shield_outlined,
+          icon: Icons.verified_user_outlined,
           title: 'KYC',
           subtitle: 'Verified',
           titleSuffix: const Icon(

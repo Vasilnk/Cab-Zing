@@ -9,6 +9,8 @@ import 'features/invoices/data/services/invoice_service.dart';
 import 'features/invoices/providers/invoice_provider.dart';
 import 'features/auth/presentation/screens/splash_screen.dart';
 import 'features/landing/bottom_navigation_control.dart';
+import 'features/profile/data/services/profile_service.dart';
+import 'features/profile/providers/profile_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,11 +32,17 @@ class MyApp extends StatelessWidget {
         Provider(
           create: (context) => InvoiceService(context.read<SecureStorageService>()),
         ),
+        Provider(
+          create: (context) => ProfileService(context.read<SecureStorageService>()),
+        ),
         ChangeNotifierProvider(
           create: (context) => AuthProvider(context.read<AuthService>()),
         ),
         ChangeNotifierProvider(
           create: (context) => InvoiceProvider(context.read<InvoiceService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProfileProvider(context.read<ProfileService>()),
         ),
       ],
       child: MaterialApp(
