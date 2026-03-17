@@ -1,5 +1,6 @@
 import 'package:cab_zing/core/constants/app_assets.dart';
 import 'package:cab_zing/core/theme/app_colors.dart';
+import 'package:cab_zing/features/invoices/screens/invoices_screen.dart';
 import 'package:flutter/material.dart';
 
 class StatusCards extends StatelessWidget {
@@ -30,7 +31,16 @@ class StatusCards extends StatelessWidget {
       children: cards.map((c) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 12),
-          child: _StatCard(data: c),
+          child: GestureDetector(
+            onTap: c.label == 'Invoices'
+                ? () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const InvoicesScreen()),
+                    )
+                : null,
+            child: _StatCard(data: c),
+          ),
         );
       }).toList(),
     );

@@ -14,7 +14,6 @@ class DashHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Logo image from assets
               Image.asset(AppAssets.logo, fit: BoxFit.cover),
               const SizedBox(width: 10),
               Text(
@@ -43,23 +42,23 @@ class DashHeader extends StatelessWidget {
           Stack(
             children: [
               Container(
-                width: 38,
-                height: 38,
+                width: 46,
+                height: 46,
+                padding: const EdgeInsets.all(6), // 👈 controls image size
                 decoration: const BoxDecoration(
                   color: AppColors.avatarBg,
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(AppAssets.profile),
-                    fit: BoxFit.contain,
-                  ),
+                ),
+                child: ClipOval(
+                  child: Image.asset(AppAssets.profile, fit: BoxFit.contain),
                 ),
               ),
               Positioned(
                 right: 2,
                 top: 0,
                 child: Container(
-                  width: 12,
-                  height: 12,
+                  width: 10,
+                  height: 10,
                   decoration: BoxDecoration(
                     color: AppColors.accentOrange,
                     shape: BoxShape.circle,
