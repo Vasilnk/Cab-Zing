@@ -1,6 +1,6 @@
 import 'package:cab_zing/core/theme/app_colors.dart';
 import 'package:cab_zing/features/auth/presentation/providers/auth_provider.dart';
-import 'package:cab_zing/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:cab_zing/features/landing/bottom_navigation_control.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => authProvider.isLoggedIn
-            ? const DashboardScreen()
+            ? const BottomNavigationControl()
             : const LoginScreen(),
       ),
     );

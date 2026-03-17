@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:cab_zing/core/constants/app_assets.dart';
 import 'package:cab_zing/core/theme/app_colors.dart';
+import 'package:flutter/material.dart';
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({super.key});
@@ -14,7 +15,7 @@ class LanguageSelector extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset(
-              'assets/images/language_vector.png',
+              AppAssets.languageVector,
               height: 22,
               width: 22,
             ),

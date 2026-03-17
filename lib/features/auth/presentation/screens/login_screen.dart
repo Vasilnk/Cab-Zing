@@ -3,7 +3,7 @@ import 'package:cab_zing/features/auth/presentation/widgets/glow_background.dart
 import 'package:cab_zing/features/auth/presentation/widgets/language_selector.dart';
 import 'package:cab_zing/features/auth/presentation/widgets/login_form.dart';
 import 'package:cab_zing/features/auth/presentation/widgets/sign_up_row.dart';
-import 'package:cab_zing/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:cab_zing/features/landing/bottom_navigation_control.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (success) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const DashboardScreen()),
+        MaterialPageRoute(
+          builder: (context) => const BottomNavigationControl(),
+        ),
       );
     } else if (authProvider.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
