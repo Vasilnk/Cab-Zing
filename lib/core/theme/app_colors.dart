@@ -29,4 +29,12 @@ class AppColors {
   static const Color chartGrid = Color(0xFF1C3347);
   static const Color chartLine = Color(0xFF71CDEA);
   static const Color chartLabel = Color(0xFF8F8F8F);
+
+  // Profile Specific
+  static const Color accentLightBlue = Color(0xFFB5CDFE);
+  static const Color accentTeal = Color(0xFFA9C9C5);
+  static const Color logoutRed = Color(0xFFEA6262);
+  static const Color darkGreen = Color(0xFF28635B);
+  static const Color accentBeige = Color(0xFFF6EFED);
+  static const Color textGrey = Color(0xFF565656);
 }

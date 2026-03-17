@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppTheme {
   static ThemeData get dark => ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.background,
-    textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+    fontFamily: 'Poppins',
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryButton,
       surface: AppColors.cardContent,
@@ -24,7 +23,7 @@ class AppTheme {
         foregroundColor: AppColors.textMain,
         shape: const StadiumBorder(),
         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-        textStyle: GoogleFonts.poppins(fontSize: 16),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
       ),
     ),
   );

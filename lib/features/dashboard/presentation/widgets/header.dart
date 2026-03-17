@@ -1,7 +1,6 @@
 import 'package:cab_zing/core/constants/app_assets.dart';
 import 'package:cab_zing/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DashHeader extends StatelessWidget {
   const DashHeader({super.key});
@@ -20,9 +19,9 @@ class DashHeader extends StatelessWidget {
               const SizedBox(width: 10),
               Text(
                 'CabZing',
-                style: GoogleFonts.poppins(
+                style: const TextStyle(
                   fontSize: 22,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                   color: Colors.white,
                 ),
               ),

@@ -14,4 +14,6 @@ class AppAssets {
   static const String bookings = '$_images/bookings.png';
   static const String invoices = '$_images/invoices.png';
   static const String languageVector = '$_images/language_vector.png';
+  //
+  static const String logout = '$_images/logout.png';
 }

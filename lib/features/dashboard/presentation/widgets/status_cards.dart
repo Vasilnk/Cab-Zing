@@ -1,7 +1,6 @@
 import 'package:cab_zing/core/constants/app_assets.dart';
 import 'package:cab_zing/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class StatusCards extends StatelessWidget {
   const StatusCards({super.key});
@@ -13,16 +12,16 @@ class StatusCards extends StatelessWidget {
         label: 'Bookings',
         value: '123',
         sub: 'Reserved',
-        pillColor: const Color(0xFFF6EFED),
-        iconColor: const Color(0xFF28635B),
+        pillColor: AppColors.accentBeige,
+        iconColor: AppColors.darkGreen,
         iconPath: AppAssets.bookings,
       ),
       StatCardData(
         label: 'Invoices',
         value: '10,232.00',
         sub: 'Rupees',
-        pillColor: const Color(0xFFA9C9C5),
-        iconColor: const Color(0xFF28635B),
+        pillColor: AppColors.accentTeal,
+        iconColor: AppColors.darkGreen,
         iconPath: AppAssets.invoices,
       ),
     ];
@@ -92,21 +91,25 @@ class _StatCard extends StatelessWidget {
               children: [
                 Text(
                   data.label,
-                  style: GoogleFonts.poppins(
+                  style: const TextStyle(
                     fontSize: 14,
-                    color: const Color(0xFFF6EFED),
+                    color: AppColors.accentBeige,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   data.value,
-                  style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 Text(
                   data.sub,
-                  style: GoogleFonts.poppins(
+                  style: const TextStyle(
                     fontSize: 13,
-                    color: const Color(0xFF565656),
+                    color: AppColors.textGrey,
                   ),
                 ),
               ],

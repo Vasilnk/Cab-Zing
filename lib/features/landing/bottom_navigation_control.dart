@@ -2,7 +2,7 @@ import 'package:cab_zing/core/constants/app_assets.dart';
 import 'package:cab_zing/core/theme/app_colors.dart';
 import 'package:cab_zing/features/alerts/alert_screen.dart';
 import 'package:cab_zing/features/dashboard/presentation/screens/dashboard_screen.dart';
-import 'package:cab_zing/features/profile/profile_screen.dart';
+import 'package:cab_zing/features/profile/screens/profile_screen.dart';
 import 'package:cab_zing/features/routes/routes_screen.dart';
 import 'package:flutter/material.dart';
 

@@ -1,6 +1,5 @@
 import 'package:cab_zing/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'revenue_chart.dart';
 
 class RevenueCard extends StatefulWidget {
@@ -35,7 +34,7 @@ class _RevenueCardState extends State<RevenueCard> {
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: GoogleFonts.poppins(fontSize: 14),
+                      style: const TextStyle(fontSize: 14, fontFamily: 'Poppins'),
                       children: const [
                         TextSpan(
                           text: 'SAR ',
@@ -54,7 +53,7 @@ class _RevenueCardState extends State<RevenueCard> {
                   const SizedBox(height: 2),
                   RichText(
                     text: TextSpan(
-                      style: GoogleFonts.poppins(fontSize: 12),
+                      style: const TextStyle(fontSize: 12, fontFamily: 'Poppins'),
                       children: const [
                         TextSpan(
                           text: '+21% ',
@@ -71,7 +70,7 @@ class _RevenueCardState extends State<RevenueCard> {
               ),
               Text(
                 'Revenue',
-                style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),
+                style: const TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -92,7 +91,7 @@ class _RevenueCardState extends State<RevenueCard> {
           Center(
             child: Text(
               'September 2023',
-              style: GoogleFonts.poppins(
+              style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.textHint,
               ),
@@ -144,7 +143,7 @@ class DaySelector extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               days[i].toString().padLeft(2, '0'),
-              style: GoogleFonts.poppins(
+              style: TextStyle(
                 fontSize: 13,
                 color: Colors.white,
                 fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
