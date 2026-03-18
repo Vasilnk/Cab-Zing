@@ -31,11 +31,11 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
     super.initState();
     filter = widget.initialFilter;
     if (filter.startDate == null) {
-      _applyPeriodRange(filter.period);
+      applyPeriodRange(filter.period);
     }
   }
 
-  void _applyPeriodRange(String period) {
+  void applyPeriodRange(String period) {
     final now = DateTime.now();
     DateTime? start, end;
 
@@ -61,7 +61,7 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
     }
   }
 
-  Future<void> _selectDate(bool isStartDate) async {
+  Future<void> selectDate(bool isStartDate) async {
     final initial = isStartDate ? filter.startDate : filter.endDate;
     final picked = await showDatePicker(
       context: context,
@@ -90,7 +90,7 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
     }
   }
 
-  void _showSelectionModal({
+  void showSelectionSeet({
     required String title,
     required List<String> options,
     required List<String> selected,
@@ -182,32 +182,32 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            _buildPeriodSelector(),
+            periodSelector(),
             const SizedBox(height: 16),
-            _buildDateRangePicker(),
+            dateRangePicker(),
             const SizedBox(height: 20),
             const Divider(height: 1, color: AppColors.border),
             const SizedBox(height: 20),
             _buildStatusFilter(),
             const SizedBox(height: 20),
-            _buildCustomerDropdown(),
+            customerDropdown(),
             const SizedBox(height: 20),
             const Divider(height: 1, color: AppColors.border),
             const SizedBox(height: 20),
-            _buildSelectedCustomersList(),
+            selectedCustomersList(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPeriodSelector() {
+  Widget periodSelector() {
     return GestureDetector(
-      onTap: () => _showSelectionModal(
+      onTap: () => showSelectionSeet(
         title: 'Select Period',
         options: periodOptions,
         selected: [filter.period],
-        onSelect: (p) => _applyPeriodRange(p),
+        onSelect: (p) => applyPeriodRange(p),
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
@@ -237,23 +237,23 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
     );
   }
 
-  Widget _buildDateRangePicker() {
+  Widget dateRangePicker() {
     return Row(
       children: [
         FilterDateButton(
-          label: _formatDate(filter.startDate),
-          onTap: () => _selectDate(true),
+          label: formatDate(filter.startDate),
+          onTap: () => selectDate(true),
         ),
         const SizedBox(width: 13),
         FilterDateButton(
-          label: _formatDate(filter.endDate),
-          onTap: () => _selectDate(false),
+          label: formatDate(filter.endDate),
+          onTap: () => selectDate(false),
         ),
       ],
     );
   }
 
-  String _formatDate(DateTime? date) {
+  String formatDate(DateTime? date) {
     if (date == null) return '--/--/----';
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
   }
@@ -264,16 +264,18 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
       child: Row(
         children: InvoiceStatus.values
             .where((s) => s != InvoiceStatus.unknown)
-            .map((status) => Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: _buildStatusButton(status),
-                ))
+            .map(
+              (status) => Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: statusButton(status),
+              ),
+            )
             .toList(),
       ),
     );
   }
 
-  Widget _buildStatusButton(InvoiceStatus status) {
+  Widget statusButton(InvoiceStatus status) {
     final isActive = filter.statuses.contains(status);
     return GestureDetector(
       onTap: () {
@@ -301,9 +303,9 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
     );
   }
 
-  Widget _buildCustomerDropdown() {
+  Widget customerDropdown() {
     return GestureDetector(
-      onTap: () => _showSelectionModal(
+      onTap: () => showSelectionSeet(
         title: 'Select Customer',
         options: widget.customerOptions,
         selected: filter.customers,
@@ -341,19 +343,17 @@ class InvoiceFilterScreenState extends State<InvoiceFilterScreen> {
     );
   }
 
-  Widget _buildSelectedCustomersList() {
+  Widget selectedCustomersList() {
     if (filter.customers.isEmpty) return const SizedBox.shrink();
 
     return Wrap(
       spacing: 10,
       runSpacing: 10,
-      children: filter.customers
-          .map((name) => _buildCustomerTag(name))
-          .toList(),
+      children: filter.customers.map((name) => customerTag(name)).toList(),
     );
   }
 
-  Widget _buildCustomerTag(String name) {
+  Widget customerTag(String name) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
       decoration: BoxDecoration(

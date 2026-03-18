@@ -33,38 +33,6 @@ class InvoicesScreenState extends State<InvoicesScreen> {
     super.dispose();
   }
 
-  // Filter the list based on search query and active filters
-  List<InvoiceModel> getFilteredInvoices(List<InvoiceModel> allInvoices) {
-    return allInvoices.where((invoice) {
-      if (searchQuery.isNotEmpty) {
-        final query = searchQuery.toLowerCase();
-        final matchNo = invoice.invoiceNo.toLowerCase().contains(query);
-        final matchName = invoice.customerName.toLowerCase().contains(query);
-        if (!matchNo && !matchName) return false;
-      }
-
-      if (activeFilter.statuses.isNotEmpty) {
-        if (!activeFilter.statuses.contains(invoice.status)) return false;
-      }
-
-      if (activeFilter.customers.isNotEmpty) {
-        if (!activeFilter.customers.contains(invoice.customerName)) {
-          return false;
-        }
-      }
-
-      if (activeFilter.startDate != null) {
-        if (invoice.date.isBefore(activeFilter.startDate!)) return false;
-      }
-      if (activeFilter.endDate != null) {
-        final endLimit = activeFilter.endDate!.add(const Duration(days: 1));
-        if (invoice.date.isAfter(endLimit)) return false;
-      }
-
-      return true;
-    }).toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +65,7 @@ class InvoicesScreenState extends State<InvoicesScreen> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSearchAndFilterHeader(customerNames),
+              searchAndFilterSection(customerNames),
               const Divider(height: 1, color: AppColors.border),
 
               if (!activeFilter.isEmpty)
@@ -107,7 +75,7 @@ class InvoicesScreenState extends State<InvoicesScreen> {
                       setState(() => activeFilter = const InvoiceFilter()),
                 ),
 
-              Expanded(child: _buildInvoiceList(provider, filteredList)),
+              Expanded(child: invoiceListView(provider, filteredList)),
             ],
           );
         },
@@ -115,7 +83,7 @@ class InvoicesScreenState extends State<InvoicesScreen> {
     );
   }
 
-  Widget _buildSearchAndFilterHeader(List<String> customerOptions) {
+  Widget searchAndFilterSection(List<String> customerOptions) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       child: Row(
@@ -202,7 +170,7 @@ class InvoicesScreenState extends State<InvoicesScreen> {
     );
   }
 
-  Widget _buildInvoiceList(
+  Widget invoiceListView(
     InvoiceProvider provider,
     List<InvoiceModel> invoices,
   ) {
@@ -230,10 +198,41 @@ class InvoicesScreenState extends State<InvoicesScreen> {
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         itemCount: invoices.length,
-        separatorBuilder: (_, __) =>
+        separatorBuilder: (c, index) =>
             const Divider(height: 1, color: AppColors.border),
         itemBuilder: (context, index) => InvoiceTile(invoice: invoices[index]),
       ),
     );
+  }
+
+  List<InvoiceModel> getFilteredInvoices(List<InvoiceModel> allInvoices) {
+    return allInvoices.where((invoice) {
+      if (searchQuery.isNotEmpty) {
+        final query = searchQuery.toLowerCase();
+        final matchNo = invoice.invoiceNo.toLowerCase().contains(query);
+        final matchName = invoice.customerName.toLowerCase().contains(query);
+        if (!matchNo && !matchName) return false;
+      }
+
+      if (activeFilter.statuses.isNotEmpty) {
+        if (!activeFilter.statuses.contains(invoice.status)) return false;
+      }
+
+      if (activeFilter.customers.isNotEmpty) {
+        if (!activeFilter.customers.contains(invoice.customerName)) {
+          return false;
+        }
+      }
+
+      if (activeFilter.startDate != null) {
+        if (invoice.date.isBefore(activeFilter.startDate!)) return false;
+      }
+      if (activeFilter.endDate != null) {
+        final endLimit = activeFilter.endDate!.add(const Duration(days: 1));
+        if (invoice.date.isAfter(endLimit)) return false;
+      }
+
+      return true;
+    }).toList();
   }
 }
